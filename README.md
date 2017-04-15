@@ -1,10 +1,14 @@
-Versioner is a simple versioning microservice, useful for maintaining an ever incrementing integer across builds created by a team of people. It's built on the Slim framework and stores the information in an SQLite database,
+Versioner is a simple versioning microservice, useful for maintaining an ever incrementing integer across builds created by a team of people. It's built on the Slim framework and stores the information in an SQLite database.
 
 The use cases vary, but the most common would be to install it on your network on a web server (or a public facing webserver).
 
+# Usage instructions
+
+There's no UI to interact with. I'd recommend using Postman or a similar tool to interact manually with the Versioner. If you need to fetch the current version or set a new one as part of a build script, you should probably use curl.
+
 Interacting with this microservice can be done over REST with the following APIs:
 
-POST /version
+**POST /version**
 
 Sets the version to a certain value or bumps the current version.
 
@@ -13,11 +17,11 @@ POST parameters:
 - secret: String - an application specific secret.
 - version: Int - optional - if not specified, the current version will be bumped.
 
-GET /version/{application_id}/{secret}
+**GET /version/{application_id}/{secret}**
 
 Returns the current version for a given application ID.
 
-POST /manage/add
+**POST /manage/add**
 
 Adds a new application to the database.
 
@@ -25,7 +29,7 @@ POST parameters
 - application_id: String (e.g. net.example.app).
 - secret: String - an application specific secret.
 
-Installation instructions
+# Installation instructions
 
 1. Download or clone this project in a location not accessible by by URL.
 
@@ -49,7 +53,8 @@ Edit the contents of the index.php file so it can resolve the paths it reference
 RewriteCond $1 !^(index\.php)
 
 RewriteBase /versioner/
-RewriteRule ^(.*)$ index.php/$1 [L]```
+RewriteRule ^(.*)$ index.php/$1 [L]
+```
 
 If you install it in a different flder (or /) edit the path above.
 
