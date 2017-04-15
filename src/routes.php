@@ -1,9 +1,9 @@
 <?php
 // Routes
 
-$app->get('/version/{application_id}', function ($request, $response, $args) {
+$app->get('/version/{application_id}/{secret}', function ($request, $response, $args) {
     // Sample log message
-    $this->logger->info("GET ");
+    $this->logger->info("GET");
 
     $application_id = filter_var($args['application_id'], FILTER_SANITIZE_STRING);
     $secret = filter_var($args['secret'], FILTER_SANITIZE_STRING);
@@ -29,7 +29,7 @@ $app->post('/version', function ($request, $response, $args) {
     $secret = filter_var($data['secret'], FILTER_SANITIZE_STRING);
 
     if (!$application_id) {
-    	return $response->withStatus(400);
+        return $response->withStatus(400);
     }
 
     $manager = new ApplicationManager($this->db);
@@ -38,18 +38,18 @@ $app->post('/version', function ($request, $response, $args) {
         return $response->withStatus(404);;
     }
     if (!$application->secret == $secret) {
-    	return $response->withStatus(403);;	
+        return $response->withStatus(403);; 
     }
 
     if ($version) {
-    	if ($version > $application->version) {
+        if ($version > $application->version) {
             $application->version = $version;
-    	    $manager->update($application);
-    	}
+            $manager->update($application);
+        }
     }
     else {
-    	$application->version++;
-    	$manager->update($application);
+        $application->version++;
+        $manager->update($application);
     }
 
     // Render index view
