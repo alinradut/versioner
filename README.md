@@ -60,6 +60,12 @@ If you install it in a different flder (or /) edit the path above.
 
 9. If you're using nginx, add the following settings:
 
-...
+```
+location /versioner {
+    try_files $uri/ /versioner/index.php;
+}
+```
+
+Update the "versioner" to the correct path under your webserver.
 
 10. If you're using any of the above, but don't care about pretty URLs or don't want to bother with .htaccess, you can also access the Versioner through https://example.org/versioner/index.php/version/APPLICATION_ID/SECRET
